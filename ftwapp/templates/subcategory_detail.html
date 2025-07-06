@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl" xml:lang="nl">
+
+<head>
+  <title>{{ category.name }}</title>
+  <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
+</head>
+
+<body>
+  <nav class="menu-bar">
+    <a href="{% url 'home' %}">Home</a>
+    <span class="menu-bar a">›</span>
+    <a href="{% url 'category_detail' subcategory.category.pk %}">{{ subcategory.category.name }}</a>
+  </nav>
+  <h2>{{ subcategory.name }}</h2>
+
+  {% if subcategory.image %}
+  <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name }}" class="subcategory-image">
+  {% endif %}
+  <div class="card-container">
+    {% for word in words %}
+      <a href="{% url 'word_detail' word.pk %}" class="card">
+      {% if word.image %}
+        <div class="card-image-contain" style="background-image: url('{{ word.image.url }}');"></div>
+        {% else %}
+      {% endif %}
+      <div class="card-title">{{ word.name }}</div>
+    </a>
+    {% endfor %}
+  </div>
+</body>
+
+</html>

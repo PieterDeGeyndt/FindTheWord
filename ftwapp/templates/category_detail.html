@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl" xml:lang="nl">
+<style>
+    .subcategory-image {
+        width: 33.33vw;
+        /* 1/3rd of the viewport width */
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
+
+<head>
+    <title>{{ category.name }}</title>
+    <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
+</head>
+
+<body>
+    <nav class="menu-bar">
+        <a href="{% url 'home' %}">Home</a>
+    </nav>
+    <h1>{{ category.name }}</h1>
+
+    {% if subcategories %}
+    <h2>Subcategorieën</h2>
+    <div class="card-container">
+        {% for subcategory in subcategories %}
+        <a href="{% url 'subcategory_detail' subcategory.pk %}" class="card">
+            <div class="card-image" style="background-image: url('{{ subcategory.image.url }}');"></div>
+            <div class="card-title">{{ subcategory.name }}</div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if words %}
+    <h2>Woorden</h2>
+    <div class="card-container">
+        {% for word in words %}
+        <a href="{% url 'word_detail' word.pk %}" class="card">
+            <div class="card-image" style="background-image: url('{{ word.image.url }}');"></div>
+            <div class="card-title">{{ word.name }}</div>
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</body>
+
+</html>

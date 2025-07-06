@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl" xml:lang="nl">
+
+<head>
+    <title>{{ word.name }}</title>
+    <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
+    <style>
+        .word-image {
+            max-width: 33vw;
+            height: auto;
+            display: block;
+            margin-bottom: 2rem;
+        }
+
+        .word-title {
+            font-size: 6vw;
+            /* 1/6th of viewport width */
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="menu-bar">
+        <a href="{% url 'home' %}">Home</a>
+        <span class="menu-bar a">›</span>
+        <a href="{% url 'category_detail' word.subcategory.category.pk %}">{{ word.subcategory.category.name }}</a>
+        <span class="menu-bar a">›</span>
+        <a href="{% url 'subcategory_detail' word.subcategory.pk %}">{{ word.subcategory.name }}</a>
+    </nav>
+        <h1>{{ word.name }}</h1>
+        {% if word.image %}
+        <div class="word-detail-container">
+        <img src="{{ word.image.url }}" alt="{{ word.name }}" class="word-detail-image">
+        <p class="word-detail-text">{{ word.description }}</p>
+        </div>
+        {% else %}
+        <p class="word-detail-no-image">{{ word.description }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

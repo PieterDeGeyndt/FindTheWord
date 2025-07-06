@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl" xml:lang="nl">
+
+<head>
+    <title>Find The Word - Start</title>
+    <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
+</head>
+
+<body>
+    <h1>Kies een categorie</h1>
+    <div class="card-container">
+    {% for category in categories %}
+        <a href="{% url 'category_detail' category.pk %}" class="card">
+            <div class="card-image" style="background-image: url('{{ category.image.url }}');"></div>
+            <div class="card-title">{{ category.name }}</div>
+        </a>
+    {% endfor %}
+</div>
+</body>
+
+</html>
