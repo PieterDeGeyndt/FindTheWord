@@ -8,9 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'your-very-secret-key-here'  # ⚠️ Replace with your actual secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['be28-2a02-a03f-ea2e-0-5c4e-e1c6-a340-f1e0.ngrok-free.app']
+ALLOWED_HOSTS = ['zoekhetwoord.be', 'www.zoekhetwoord.be', 'localhost', 'zoekhetwoord.nl', 'www.zoekhetwoord.nl', '134.209.203.85']
 
 # Application definition
 INSTALLED_APPS = [
