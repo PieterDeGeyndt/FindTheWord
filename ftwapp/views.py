@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from tempfile import NamedTemporaryFile
 from django.core.files import File
 from .models import Category, Subcategory, Word
+from django.conf import settings
 
 @staff_member_required
 def download_and_assign_image(request):
@@ -47,7 +48,7 @@ def image_search_view(request):
     if not query:
         return JsonResponse({'error': 'No query provided'}, status=400)
 
-    api_key = 'b2ce6caa91b5b0c60dc79880adca8b6686f6fbd62e7b49648bb4f51fdb92a467'  # ⬅️ Replace with your real SerpAPI key!
+    api_key = settings.SERPAPI_KEY  # ⬅️ Use the SerpAPI key from settings
     serp_url = f'https://serpapi.com/search?q={query}&tbm=isch&ijn=0&api_key={api_key}'
 
     resp = requests.get(serp_url)
@@ -80,3 +81,6 @@ def subcategory_detail(request, subcategory_id):
 def word_detail(request, pk):
     word = get_object_or_404(Word, pk=pk)
     return render(request, 'word_detail.html', {'word': word})
+
+def info(request):
+    return render(request, 'info.html')

@@ -8,4 +8,5 @@ urlpatterns = [
     path('image-search/', views.image_search_view, name='image_search'),
     path('download-image/', views.download_and_assign_image, name='download_image'),
     path('word/<int:pk>/', views.word_detail, name='word_detail'),
+    path('info/', views.info, name='info'),
 ]

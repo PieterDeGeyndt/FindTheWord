@@ -1,44 +1,20 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="nl" xml:lang="nl">
+{% extends "base.html" %}
+{% block nav_button %}
+    <a href="{% url 'subcategory_detail' word.subcategory.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+{% endblock %}
+{% block title %}{{ word.name }} - Find the Word{% endblock %}
 
-<head>
-    <title>{{ word.name }}</title>
-    <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
-    <style>
-        .word-image {
-            max-width: 33vw;
-            height: auto;
-            display: block;
-            margin-bottom: 2rem;
-        }
+{% block breadcrumbs %}
+<span>›</span>
+<a href="{% url 'category_detail' word.subcategory.category.pk %}" class="hover:underline">{{ word.subcategory.category.name }}</a>
+<span>›</span>
+<a href="{% url 'subcategory_detail' word.subcategory.pk %}" class="hover:underline">{{ word.subcategory.name }}</a>
+{% endblock %}
 
-        .word-title {
-            font-size: 6vw;
-            /* 1/6th of viewport width */
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="menu-bar">
-        <a href="{% url 'home' %}">Home</a>
-        <span class="menu-bar a">›</span>
-        <a href="{% url 'category_detail' word.subcategory.category.pk %}">{{ word.subcategory.category.name }}</a>
-        <span class="menu-bar a">›</span>
-        <a href="{% url 'subcategory_detail' word.subcategory.pk %}">{{ word.subcategory.name }}</a>
-    </nav>
-        <h1>{{ word.name }}</h1>
-        {% if word.image %}
-        <div class="word-detail-container">
-        <img src="{{ word.image.url }}" alt="{{ word.name }}" class="word-detail-image">
-        <p class="word-detail-text">{{ word.description }}</p>
-        </div>
-        {% else %}
-        <p class="word-detail-no-image">{{ word.description }}</p>
-        {% endif %}
-    </div>
-</body>
-</html>
+{% block content %}
+<h1 class="text-3xl font-bold mb-4">{{ word.name }}</h1>
+{% if word.image %}
+    <img src="{{ word.image.url }}" alt="{{ word.name }}" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
+{% endif %}
+<p class="text-lg leading-relaxed max-w-2xl mx-auto" style="font-family: Verdana, Arial, sans-serif;">{{ word.description }}</p>
+{% endblock %}

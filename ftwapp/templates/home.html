@@ -1,22 +1,17 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="nl" xml:lang="nl">
+{% extends "base.html" %}
+{% block nav_button %}
+    <a href="{% url 'info' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Info</a>
+{% endblock %}
+{% block title %}Home - Find the Word{% endblock %}
 
-<head>
-    <title>Find The Word - Start</title>
-    <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
-</head>
-
-<body>
-    <h1>Kies een categorie</h1>
-    <div class="card-container">
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Kies een categorie</h1>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for category in categories %}
-        <a href="{% url 'category_detail' category.pk %}" class="card">
-            <div class="card-image" style="background-image: url('{{ category.image.url }}');"></div>
-            <div class="card-title">{{ category.name }}</div>
+        <a href="{% url 'category_detail' category.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ category.image.url }}');"></div>
+            <div class="text-center text-xl font-bold py-3">{{ category.name }}</div>
         </a>
     {% endfor %}
 </div>
-</body>
-
-</html>
+{% endblock %}

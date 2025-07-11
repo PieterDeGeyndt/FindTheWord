@@ -1,34 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="nl" xml:lang="nl">
+{% extends "base.html" %}
+{% block nav_button %}
+    <a href="{% url 'category_detail' subcategory.category.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+{% endblock %}
+{% block title %}{{ subcategory.name }} - Find the Word{% endblock %}
 
-<head>
-  <title>{{ category.name }}</title>
-  <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
-</head>
+{% block breadcrumbs %}
+<span>›</span>
+<a href="{% url 'category_detail' subcategory.category.pk %}" class="hover:underline">{{ subcategory.category.name }}</a>
+<span>›</span>
+<a href="{% url 'subcategory_detail' subcategory.pk %}" class="hover:underline">{{ subcategory.name }}</a>
+{% endblock %}
 
-<body>
-  <nav class="menu-bar">
-    <a href="{% url 'home' %}">Home</a>
-    <span class="menu-bar a">›</span>
-    <a href="{% url 'category_detail' subcategory.category.pk %}">{{ subcategory.category.name }}</a>
-  </nav>
-  <h2>{{ subcategory.name }}</h2>
-
-  {% if subcategory.image %}
-  <img src="{{ subcategory.image.url }}" alt="{{ subcategory.name }}" class="subcategory-image">
-  {% endif %}
-  <div class="card-container">
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{{ subcategory.name }}</h1>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for word in words %}
-      <a href="{% url 'word_detail' word.pk %}" class="card">
-      {% if word.image %}
-        <div class="card-image-contain" style="background-image: url('{{ word.image.url }}');"></div>
-        {% else %}
-      {% endif %}
-      <div class="card-title">{{ word.name }}</div>
-    </a>
+        <a href="{% url 'word_detail' word.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ word.image.url }}');"></div>
+            <div class="text-center text-xl font-bold py-3">{{ word.name }}</div>
+        </a>
     {% endfor %}
-  </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

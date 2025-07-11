@@ -1,51 +1,22 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="nl" xml:lang="nl">
-<style>
-    .subcategory-image {
-        width: 33.33vw;
-        /* 1/3rd of the viewport width */
-        max-width: 100%;
-        height: auto;
-        display: block;
-    }
-</style>
+{% extends "base.html" %}
+{% block nav_button %}
+    <a href="{% url 'home' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+{% endblock %}
+{% block title %}{{ category.name }} - Find the Word{% endblock %}
 
-<head>
-    <title>{{ category.name }}</title>
-    <link rel="stylesheet" href="{% static 'ftwapp/styles.css' %}">
-</head>
+{% block breadcrumbs %}
+<span>›</span>
+<a href="{% url 'category_detail' category.pk %}" class="hover:underline">{{ category.name }}</a>
+{% endblock %}
 
-<body>
-    <nav class="menu-bar">
-        <a href="{% url 'home' %}">Home</a>
-    </nav>
-    <h1>{{ category.name }}</h1>
-
-    {% if subcategories %}
-    <h2>Subcategorieën</h2>
-    <div class="card-container">
-        {% for subcategory in subcategories %}
-        <a href="{% url 'subcategory_detail' subcategory.pk %}" class="card">
-            <div class="card-image" style="background-image: url('{{ subcategory.image.url }}');"></div>
-            <div class="card-title">{{ subcategory.name }}</div>
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">{{ category.name }}</h1>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {% for subcategory in subcategories %}
+        <a href="{% url 'subcategory_detail' subcategory.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ subcategory.image.url }}');"></div>
+            <div class="text-center text-xl font-bold py-3">{{ subcategory.name }}</div>
         </a>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if words %}
-    <h2>Woorden</h2>
-    <div class="card-container">
-        {% for word in words %}
-        <a href="{% url 'word_detail' word.pk %}" class="card">
-            <div class="card-image" style="background-image: url('{{ word.image.url }}');"></div>
-            <div class="card-title">{{ word.name }}</div>
-        </a>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-</body>
-
-</html>
+    {% endfor %}
+</div>
+{% endblock %}

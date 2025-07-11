@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db.models import Q
 
 
+
 client = OpenAI(api_key= settings.OPENAI_API_KEY)
 language=settings.WEB_LANGUAGE
 class Command(BaseCommand):
