@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block nav_button %}
-    <a href="{% url 'category_detail' subcategory.category.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+<a href="{% url 'category_detail' subcategory.category.pk %}"
+    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
 {% endblock %}
 {% block title %}{{ subcategory.name }} - Find the Word{% endblock %}
 
@@ -15,10 +17,16 @@
 <h1 class="text-3xl font-bold mb-6">{{ subcategory.name }}</h1>
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for word in words %}
-        <a href="{% url 'word_detail' word.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
-            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ word.image.url }}');"></div>
-            <div class="text-center text-xl font-bold py-3">{{ word.name }}</div>
-        </a>
+    <a href="{% url 'word_detail' word.pk %}"
+        class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+        {% if word.image %}
+        <div class="w-full h-48 bg-center bg-contain bg-no-repeat"
+            style="background-image: url('{{ word.image.url }}');"></div>
+        {% else %}
+        <img src="{% static 'images/default.jpg' %}" alt="">
+        {% endif %}
+        <div class="text-center text-xl font-bold py-3">{{ word.name }}</div>
+    </a>
     {% endfor %}
 </div>
 {% endblock %}

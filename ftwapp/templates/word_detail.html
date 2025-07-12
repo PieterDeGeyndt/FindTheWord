@@ -1,12 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {% block nav_button %}
-    <a href="{% url 'subcategory_detail' word.subcategory.pk %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+<a href="{% url 'subcategory_detail' word.subcategory.pk %}"
+    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
 {% endblock %}
 {% block title %}{{ word.name }} - Find the Word{% endblock %}
 
 {% block breadcrumbs %}
 <span>›</span>
-<a href="{% url 'category_detail' word.subcategory.category.pk %}" class="hover:underline">{{ word.subcategory.category.name }}</a>
+<a href="{% url 'category_detail' word.subcategory.category.pk %}" class="hover:underline">{{word.subcategory.category.name }}</a>
 <span>›</span>
 <a href="{% url 'subcategory_detail' word.subcategory.pk %}" class="hover:underline">{{ word.subcategory.name }}</a>
 {% endblock %}
@@ -14,7 +16,9 @@
 {% block content %}
 <h1 class="text-3xl font-bold mb-4">{{ word.name }}</h1>
 {% if word.image %}
-    <img src="{{ word.image.url }}" alt="{{ word.name }}" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
+<img src="{{ word.image.url }}" alt="{{ word.name }}" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
+{% else %}
+<img src="{% static 'images/default.jpg' %}" alt="Default Image" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
 {% endif %}
-<p class="text-lg leading-relaxed max-w-2xl mx-auto" style="font-family: Verdana, Arial, sans-serif;">{{ word.description }}</p>
+<p class="text-lg leading-relaxed max-w-2xl mx-auto" style="font-family: Verdana, Arial, sans-serif;">{{word.description}}</p>
 {% endblock %}

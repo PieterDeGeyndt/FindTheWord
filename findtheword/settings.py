@@ -8,9 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'your-very-secret-key-here'  # ⚠️ Replace with your actual secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['zoekhetwoord.be', 'www.zoekhetwoord.be', 'localhost', 'zoekhetwoord.nl', 'www.zoekhetwoord.nl', '134.209.203.85']
+ALLOWED_HOSTS = ['zoekhetwoord.be', 'www.zoekhetwoord.be', 'localhost', 'zoekhetwoord.nl', 'www.zoekhetwoord.nl', '134.209.203.85', '127.0.0.1', '127.0.0.1:8000']
 
 # Application definition
 INSTALLED_APPS = [
@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'ftwapp',  # Your app
 ]
 

@@ -1,0 +1,64 @@
+/* Make the navigation/menu bar taller */
+nav {
+  height: 70px; /* Adjust as needed */
+  display: flex;
+  align-items: center; /* Vertically center links/buttons */
+  justify-content: space-between; /* Space out logo and links if needed */
+  padding: 0 20px;
+}
+
+/* Style links and buttons inside the nav */
+nav a,
+nav button {
+  font-size: 18px;        /* Larger text for better readability */
+  padding: 12px 20px;     /* Larger clickable area */
+  text-decoration: none;  /* Remove underlines if desired */
+  border: none;          /* Remove borders on buttons if any */
+  background: none;      /* Remove background if using plain links */
+  cursor: pointer;      /* Show pointer on hover for buttons */
+  color: inherit;       /* Use parent text color */
+}
+
+/* Add spacing between links/buttons if needed */
+nav a + a,
+nav button + button {
+  margin-left: 10px;
+}
+
+nav span {
+  font-size: 22px;   /* or your desired size */
+  position: relative;
+  top: 10px;          /* Adjust this value until it lines up perfectly — try 3px, 4px, 5px, etc. */
+}
+
+/* Make it even larger on mobile devices */
+@media (max-width: 768px) {
+  nav {
+    height: 80px;
+  }
+
+  nav a,
+  nav button {
+    font-size: 20px;
+    padding: 14px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  nav a,
+  nav button {
+    font-size: 16px;       /* Slightly smaller font */
+    padding: 10px 14px;    /* Less horizontal padding */
+  }
+  nav span {
+    font-size: 18px;
+    top: 10px; /* Adjust if needed */
+  }
+  nav {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+nav::-webkit-scrollbar {
+  display: none; /* Hides scrollbar on mobile for a cleaner look */
+}
+}

@@ -18,7 +18,7 @@ class Subcategory(models.Model):
         return self.name
 class Word(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='words/')
+    image = models.ImageField(upload_to='words/', blank=True, null=True)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='words')
     description = models.TextField(blank=True, null=True)
 

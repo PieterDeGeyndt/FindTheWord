@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block nav_button %}
     <a href="{% url 'info' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Info</a>
 {% endblock %}
@@ -9,7 +10,11 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for category in categories %}
         <a href="{% url 'category_detail' category.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+            {% if category.image %}
             <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ category.image.url }}');"></div>
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" alt="Default Image" class="w-full h-48 object-cover">
+            {% endif %}
             <div class="text-center text-xl font-bold py-3">{{ category.name }}</div>
         </a>
     {% endfor %}
