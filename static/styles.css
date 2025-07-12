@@ -10,7 +10,7 @@ nav {
 /* Style links and buttons inside the nav */
 nav a,
 nav button {
-  font-size: 18px;        /* Larger text for better readability */
+  font-size: 20px;        /* Larger text for better readability */
   padding: 12px 20px;     /* Larger clickable area */
   text-decoration: none;  /* Remove underlines if desired */
   border: none;          /* Remove borders on buttons if any */
@@ -26,7 +26,7 @@ nav button + button {
 }
 
 nav span {
-  font-size: 22px;   /* or your desired size */
+  font-size: 25px;   /* or your desired size */
   position: relative;
   top: 10px;          /* Adjust this value until it lines up perfectly — try 3px, 4px, 5px, etc. */
 }
