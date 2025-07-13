@@ -71,7 +71,7 @@ waitForJQuery(function($) {
                     marginTop: '10px',
                     display: 'flex',
                     flexWrap: 'wrap'
-                });
+                });         
 
                 images.slice(0, 20).forEach(function(img) {
                     var imageTag = $('<img>').attr('src', img.thumbnail).css({
