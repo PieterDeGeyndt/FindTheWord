@@ -75,7 +75,7 @@ waitForJQuery(function($) {
 
                 images.slice(0, 20).forEach(function(img) {
                     var imageTag = $('<img>').attr('src', img.thumbnail).css({
-                        width: '120px',
+                        width: '250x',
                         margin: '5px',
                         border: '2px solid #eee',
                         borderRadius: '4px',
