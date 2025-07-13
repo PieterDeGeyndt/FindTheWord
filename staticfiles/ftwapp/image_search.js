@@ -73,7 +73,7 @@ waitForJQuery(function($) {
                     flexWrap: 'wrap'
                 });
 
-                images.slice(0, 10).forEach(function(img) {
+                images.slice(0, 20).forEach(function(img) {
                     var imageTag = $('<img>').attr('src', img.thumbnail).css({
                         width: '120px',
                         margin: '5px',
