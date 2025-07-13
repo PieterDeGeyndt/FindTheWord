@@ -1,5 +1,10 @@
 import os
 from pathlib import Path
+import environ
+
+env = environ.Env()
+environ.Env.read_env('/opt/FindTheWord/.env')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'your-very-secret-key-here'  # ⚠️ Replace with your actual secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['zoekhetwoord.be', 'www.zoekhetwoord.be', 'localhost', 'zoekhetwoord.nl', 'www.zoekhetwoord.nl', '134.209.203.85','127.0.0.1']
 
@@ -100,5 +105,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # SerpAPI key (you can also put this in .env and load via os.environ)
-SERPAPI_KEY = os.getenv('SERPAPI_KEY')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY_FTW')
+SERPAPI_KEY = env('SERPAPI_KEY')
+OPENAI_API_KEY = env('OPENAI_API_KEY_FTW')
