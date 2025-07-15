@@ -52,7 +52,7 @@ nav span {
   }
   nav span {
     font-size: 18px;
-    top: 10px; /* Adjust if needed */
+    top: 0px; /* Adjust if needed */
   }
   nav {
   white-space: nowrap;
