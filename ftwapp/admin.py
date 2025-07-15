@@ -99,6 +99,7 @@ class WordAdminForm(forms.ModelForm):
 @admin.register(Word)
 class WordAdmin(ImportExportModelAdmin):
     form = WordAdminForm
+    fields = ('name', 'image', 'category', 'subcategory')
 
     class Media:
         js = (

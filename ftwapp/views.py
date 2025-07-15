@@ -65,9 +65,21 @@ def home(request):
 def category_detail(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     subcategories = category.subcategories.all()
+
+    # Get words directly under this category
+    direct_words = Word.objects.filter(category=category)
+
+    # Get words from subcategories
+    subcategory_words = Word.objects.filter(subcategory__in=subcategories)
+
+    # Combine them
+    words = direct_words | subcategory_words
+    words = words.distinct()
+
     return render(request, 'category_detail.html', {
         'category': category,
         'subcategories': subcategories,
+        'words': words,
     })
 
 def subcategory_detail(request, subcategory_id):
