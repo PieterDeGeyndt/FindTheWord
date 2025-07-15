@@ -28,7 +28,7 @@ nav button + button {
 nav span {
   font-size: 25px;   /* or your desired size */
   position: relative;
-  top: 10px;          /* Adjust this value until it lines up perfectly — try 3px, 4px, 5px, etc. */
+  top: 0px;          /* Adjust this value until it lines up perfectly — try 3px, 4px, 5px, etc. */
 }
 
 /* Make it even larger on mobile devices */

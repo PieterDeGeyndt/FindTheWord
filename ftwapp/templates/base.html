@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Zoek het woord{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
@@ -12,13 +13,16 @@
 <body class="bg-gray-50 text-gray-800 font-sans">
 
     <!-- Navbar -->
-    <nav class="bg-gray-100 px-4 py-3 shadow-md flex items-center justify-between text-lg font-bold text-gray-700">
-    <div class="flex space-x-2">
-        <a href="{% url 'home' %}" class="hover:underline">Home</a>
-        {% block breadcrumbs %}
-        {% endblock %}
+<nav class="bg-gray-100 px-4 py-3 shadow-md flex items-center justify-between text-lg font-bold text-gray-700">
+    <div class="flex items-center space-x-3">
+        <img src="{% static 'logo.png' %}" alt="Logo" class="h-16 w-auto">
+        <div class="flex items-center space-x-2">
+            <a href="{% url 'home' %}" class="hover:underline">Home</a>
+            {% block breadcrumbs %}
+            {% endblock %}
+        </div>
     </div>
-    <div>
+    <div class="flex items-center">
         {% block nav_button %}
         {% endblock %}
     </div>

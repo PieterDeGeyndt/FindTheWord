@@ -2,4 +2,8 @@
 __pycache__/
 settings.py
 .env
+<<<<<<< HEAD
 db.sqlite3
+=======
+db.sqlite3
+>>>>>>> be952546f5a985cf2329fb9feffebb1a691619e5
