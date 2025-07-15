@@ -6,6 +6,9 @@
 {% block title %}Zoek het Woord - Info{% endblock %}
 
 {% block content %}
+<!-- Centered logo at the top -->
+<img src="{% static 'logo.png' %}" alt="Logo" class="max-h-64 object-contain mx-auto block mb-6">
+
 <h1 class="text-3xl font-bold mb-6">Wat is 'Zoek het Woord'?</h1>
 
 <div class="flex items-start space-x-6 max-w-4xl">
@@ -21,12 +24,11 @@
             <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Meer info</button>
         </a>
     </p>
-    <img src="{% static 'logo.png' %}" alt="Logo" class="max-h-64 object-contain">
 </div>
 
 <!-- New visually distinct section -->
 <div class="bg-gray-100 rounded-lg shadow mt-12 p-6 max-w-4xl">
-    <h2 class="text-xl font-bold mb-4">Heb je nog woorden die je wil laten toevoegen of ideetjes voor deze site?</h2>
+    <h2 class="text-xl font-bold mb-4">Hebt u nog woorden die u wil laten toevoegen of ideetjes voor deze site?</h2>
     <p class="text-lg leading-relaxed">
         Laat het ons weten via e-mail:
         <br>
