@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold mb-4">{{ word.name }}</h1>
+<h1 class="text-3xl font-bold mb-4 text-center">{{ word.name }}</h1>
 {% if word.image %}
 <img src="{{ word.image.url }}" alt="{{ word.name }}" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
 {% else %}
