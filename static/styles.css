@@ -1,64 +1,114 @@
-/* Make the navigation/menu bar taller */
+/* ===============================
+    Base nav styling
+=============================== */
 nav {
-  height: 70px; /* Adjust as needed */
+  height: 70px;
   display: flex;
-  align-items: center; /* Vertically center links/buttons */
-  justify-content: space-between; /* Space out logo and links if needed */
+  align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
+  overflow-x: auto; /* enable horizontal scroll if too wide */
 }
 
-/* Style links and buttons inside the nav */
+nav::-webkit-scrollbar {
+  display: none; /* hides scrollbar on mobile for a cleaner look */
+}
+
 nav a,
 nav button {
-  font-size: 20px;        /* Larger text for better readability */
-  padding: 12px 20px;     /* Larger clickable area */
-  text-decoration: none;  /* Remove underlines if desired */
-  border: none;          /* Remove borders on buttons if any */
-  background: none;      /* Remove background if using plain links */
-  cursor: pointer;      /* Show pointer on hover for buttons */
-  color: inherit;       /* Use parent text color */
+  font-size: 20px;
+  padding: 12px 10px;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
 }
 
-/* Add spacing between links/buttons if needed */
-nav a + a,
-nav button + button {
+nav a+a,
+nav button+button {
   margin-left: 10px;
 }
 
-nav span {
-  font-size: 25px;   /* or your desired size */
-  position: relative;
-  top: 0px;          /* Adjust this value until it lines up perfectly — try 3px, 4px, 5px, etc. */
+nav img {
+  height: 48px;
+  width: auto;
 }
 
-/* Make it even larger on mobile devices */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.breadcrumbs a {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* small gap between > and text */
+  text-decoration: none;
+  color: inherit;
+}
+
+.breadcrumbs span {
+  font-size: 20px;
+}
+
+/* ===============================
+    Medium screens (≤768px)
+=============================== */
 @media (max-width: 768px) {
   nav {
     height: 80px;
   }
 
+  nav img {
+    height: 40px;
+  }
+
   nav a,
   nav button {
-    font-size: 20px;
-    padding: 14px 24px;
+    font-size: 18px;
+    padding: 10px 16px;
+  }
+
+  nav span {
+    font-size: 22px;
+  }
+
+  .breadcrumbs {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 30px; /* indent when stacked */
+    gap: 4px; /* vertical spacing when stacked */
   }
 }
 
+/* ===============================
+    Small screens (≤480px)
+=============================== */
 @media (max-width: 480px) {
+  nav {
+    height: auto; /* allow nav to expand naturally if needed */
+  }
+
+  nav img {
+    height: 32px;
+  }
+
   nav a,
   nav button {
-    font-size: 16px;       /* Slightly smaller font */
-    padding: 10px 14px;    /* Less horizontal padding */
+    font-size: 16px;
+    padding: 6px 10px;
   }
+
   nav span {
     font-size: 18px;
-    top: 0px; /* Adjust if needed */
   }
-  nav {
-  white-space: nowrap;
-  overflow-x: auto;
-}
-nav::-webkit-scrollbar {
-  display: none; /* Hides scrollbar on mobile for a cleaner look */
-}
+
+  .breadcrumbs {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0px; /* indent when stacked */
+    gap: 0px; /* vertical spacing when stacked */
+  }
 }

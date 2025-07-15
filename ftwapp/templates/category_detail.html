@@ -6,8 +6,9 @@
 {% block title %}Zoek het Woord - {{ category.name }}{% endblock %}
 
 {% block breadcrumbs %}
-<span>›</span>
-<a href="{% url 'category_detail' category.pk %}" class="hover:underline">{{ category.name }}</a>
+<div class="breadcrumbs">
+<a href="{% url 'category_detail' category.pk %}"><span>&gt;</span>{{ category.name }}</a>
+</div>
 {% endblock %}
 
 {% block content %}

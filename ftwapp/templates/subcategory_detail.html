@@ -7,10 +7,14 @@
 {% block title %}Zoek het Woord - {{ subcategory.name }}{% endblock %}
 
 {% block breadcrumbs %}
-<span>›</span>
-<a href="{% url 'category_detail' subcategory.category.pk %}" class="hover:underline">{{ subcategory.category.name }}</a>
-<span>›</span>
-<a href="{% url 'subcategory_detail' subcategory.pk %}" class="hover:underline">{{ subcategory.name }}</a>
+<div class="breadcrumbs">
+    <a href="{% url 'category_detail' subcategory.category.pk %}">
+        <span>&gt;</span> {{ subcategory.category.name }}
+    </a>
+    <a href="{% url 'subcategory_detail' subcategory.pk %}">
+        <span>&gt;</span> {{ subcategory.name }}
+    </a>
+</div>
 {% endblock %}
 
 {% block content %}
