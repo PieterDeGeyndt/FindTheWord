@@ -1,19 +1,28 @@
 {% extends "base.html" %}
 {% load static %}
 {% block nav_button %}
+{% if word.subcategory %}
 <a href="{% url 'subcategory_detail' word.subcategory.pk %}"
     class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+    {% else %}
+<a href="{% url 'category_detail' word.category.pk %}"
+    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Terug</a>
+    {% endif %}
 {% endblock %}
 {% block title %}Zoek het Woord - {{ word.name }}{% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-    <a href="{% url 'category_detail' word.subcategory.category.pk %}">
-        <span>&gt;</span> {{ word.subcategory.category.name }}
+    {% if word.category %}
+    <a href="{% url 'category_detail' word.category.pk %}">
+        <span>&gt;</span> {{ word.category.name }}
     </a>
+    {% endif %}
+    {% if word.subcategory %}
     <a href="{% url 'subcategory_detail' word.subcategory.pk %}">
         <span>&gt;</span> {{ word.subcategory.name }}
     </a>
+    {% endif %}
 </div>
 {% endblock %}
 
