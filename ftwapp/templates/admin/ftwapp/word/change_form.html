@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  {% if prev_word_url %}
+    <li>
+      <a class="button" href="{{ prev_word_url }}">⟵ Previous</a>
+    </li>
+  {% endif %}
+  {% if next_word_url %}
+    <li>
+      <a class="button" href="{{ next_word_url }}">Next ⟶</a>
+    </li>
+  {% endif %}
+{% endblock %}
