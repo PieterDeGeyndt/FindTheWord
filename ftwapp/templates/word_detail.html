@@ -19,6 +19,9 @@
     </a>
     {% endif %}
     {% if word.subcategory %}
+    <a href="{% url 'category_detail' word.subcategory.category.pk %}">
+        <span>&gt;</span> {{ word.subcategory.category.name }}
+    </a>
     <a href="{% url 'subcategory_detail' word.subcategory.pk %}">
         <span>&gt;</span> {{ word.subcategory.name }}
     </a>
