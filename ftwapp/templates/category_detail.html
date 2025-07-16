@@ -12,11 +12,21 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold mb-6">{{ category.name }}</h1>
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">{{ category.name }}</h1>
+
+    <form method="get" class="flex items-center gap-2">
+        <label for="order" class="text-lg">Sorteer:</label>
+        <select name="order" id="order" class="border rounded px-2 py-1" onchange="this.form.submit()">
+            <option value="alphabetical" {% if order == 'alphabetical' %}selected{% endif %}>Alfabetisch</option>
+            <option value="last_used" {% if order == 'last_used' %}selected{% endif %}>Laatst gebruikt</option>
+        </select>
+    </form>
+</div>
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for subcategory in subcategories %}
     <a href="{% url 'subcategory_detail' subcategory.pk %}"
-        class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+        class="item-card flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
         {% if subcategory.image %}
         <div class="w-full h-48 bg-center bg-contain bg-no-repeat"
             style="background-image: url('{{ subcategory.image.url }}');"></div>
@@ -32,7 +42,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     {% for word in words %}
     <a href="{% url 'word_detail' word.pk %}"
-        class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+        class="item-card flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
         {% if word.image %}
         <div class="w-full h-48 bg-center bg-contain bg-no-repeat"
             style="background-image: url('{{ word.image.url }}');"></div>

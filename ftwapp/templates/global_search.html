@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Zoek Resultaten{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Zoekresultaten voor "{{ query }}"</h1>
+
+{% if not query %}
+<p>Typ iets om te zoeken.</p>
+{% endif %}
+
+{% if categories %}
+<h2 class="text-2xl font-bold mt-4">Categorieën</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+    {% for category in categories %}
+        <a href="{% url 'category_detail' category.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200 item-card">
+            {% if category.image %}
+            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ category.image.url }}');"></div>
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" alt="" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="text-center text-xl font-bold py-3">{{ category.name }}</div>
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if subcategories %}
+<h2 class="text-2xl font-bold mt-8">Subcategorieën</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+    {% for subcategory in subcategories %}
+        <a href="{% url 'subcategory_detail' subcategory.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200 item-card">
+            {% if subcategory.image %}
+            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ subcategory.image.url }}');"></div>
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" alt="" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="text-center text-xl font-bold py-3">{{ subcategory.name }}</div>
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if words %}
+<h2 class="text-2xl font-bold mt-8">Woorden</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+    {% for word in words %}
+        <a href="{% url 'word_detail' word.pk %}" class="flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200 item-card">
+            {% if word.image %}
+            <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('{{ word.image.url }}');"></div>
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" alt="" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="text-center text-xl font-bold py-3">{{ word.name }}</div>
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if not categories and not subcategories and not words and query %}
+<p class="mt-6 text-gray-600">Geen resultaten gevonden.</p>
+{% endif %}
+
+{% endblock %}

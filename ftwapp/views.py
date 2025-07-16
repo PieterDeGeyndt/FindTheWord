@@ -7,6 +7,7 @@ from tempfile import NamedTemporaryFile
 from django.core.files import File
 from .models import Category, Subcategory, Word
 from django.conf import settings
+from django.utils import timezone
 
 @staff_member_required
 def download_and_assign_image(request):
@@ -57,42 +58,163 @@ def image_search_view(request):
         return JsonResponse({'images': data.get('images_results', [])})
     else:
         return JsonResponse({'error': 'Failed to fetch images'}, status=500)
+#-----------------------------Global Search view ----------------------------------------------------
+
+from django.urls import reverse
+
+def live_search_cards(request):
+    query = request.GET.get('q', '')
+
+    categories = []
+    subcategories = []
+    words = []
+
+    if query:
+        categories = Category.objects.filter(name__icontains=query)
+        subcategories = Subcategory.objects.filter(name__icontains=query)
+        words = Word.objects.filter(name__icontains=query)
+
+    results = {
+        'categories': [
+            {
+                'id': c.id,
+                'name': c.name,
+                'image': c.image.url if c.image else '',
+                'url': reverse('category_detail', args=[c.id]),
+            } for c in categories
+        ],
+        'subcategories': [
+            {
+                'id': s.id,
+                'name': s.name,
+                'image': s.image.url if s.image else '',
+                'url': reverse('subcategory_detail', args=[s.id]),
+            } for s in subcategories
+        ],
+        'words': [
+            {
+                'id': w.id,
+                'name': w.name,
+                'image': w.image.url if w.image else '',
+                'url': reverse('word_detail', args=[w.id]),
+            } for w in words
+        ]
+    }
+
+    return JsonResponse(results)
+
+#-----------------------------Home view ----------------------------------------------------
+
 
 def home(request):
+    order = request.GET.get('order')
+    if order:
+        request.session['order'] = order
+    else:
+        order = request.session.get('order', 'alphabetical')
+
     categories = Category.objects.filter(parent__isnull=True)
-    return render(request, 'home.html', {'categories': categories})
+
+    if order == 'last_used':
+        categories = categories.order_by('-last_used')
+    else:
+        categories = categories.order_by('name')
+
+    return render(request, 'home.html', {
+        'categories': categories,
+        'order': order,
+    })
+
+#-----------------------------Category detail view ----------------------------------------------------
 
 def category_detail(request, category_id):
+    order = request.GET.get('order')
+    if order:
+        request.session['order'] = order
+    else:
+        order = request.session.get('order', 'alphabetical')
+
     category = get_object_or_404(Category, id=category_id)
     subcategories = category.subcategories.all()
 
-    # Get words directly under this category
+    if order == 'last_used':
+        subcategories = subcategories.order_by('-last_used')
+    else:
+        subcategories = subcategories.order_by('name')
+
     direct_words = Word.objects.filter(category=category)
-
-    # Get words from subcategories
     subcategory_words = Word.objects.filter(subcategory__in=subcategories)
-
-    # Combine them
     words = direct_words | subcategory_words
     words = words.distinct()
+
+    if order == 'last_used':
+        words = words.order_by('-last_used')
+    else:
+        words = words.order_by('name')
 
     return render(request, 'category_detail.html', {
         'category': category,
         'subcategories': subcategories,
         'words': words,
+        'order': order,
     })
 
+#-----------------------------Subcategory detail view ----------------------------------------------------
+
 def subcategory_detail(request, subcategory_id):
+    order = request.GET.get('order')
+    if order:
+        request.session['order'] = order
+    else:
+        order = request.session.get('order', 'alphabetical')
+
     subcategory = get_object_or_404(Subcategory, id=subcategory_id)
     words = subcategory.words.all()
+
+    if order == 'last_used':
+        words = words.order_by('-last_used')
+    else:
+        words = words.order_by('name')
+
     return render(request, 'subcategory_detail.html', {
         'subcategory': subcategory,
         'words': words,
+        'order': order,
     })
+
+#-----------------------------Word detail view ----------------------------------------------------
+
+from django.utils import timezone
 
 def word_detail(request, pk):
     word = get_object_or_404(Word, pk=pk)
-    return render(request, 'word_detail.html', {'word': word})
+    now = timezone.now()
+
+    # Update word
+    word.last_used = now
+    word.save(update_fields=['last_used'])
+
+    # Update subcategory
+    if word.subcategory:
+        word.subcategory.last_used = now
+        word.subcategory.save(update_fields=['last_used'])
+
+        # Update category via subcategory
+        if word.subcategory.category:
+            word.subcategory.category.last_used = now
+            word.subcategory.category.save(update_fields=['last_used'])
+
+    # If word directly belongs to a category
+    elif word.category:
+        word.category.last_used = now
+        word.category.save(update_fields=['last_used'])
+
+    # Get current ordering preference from session
+    order = request.session.get('order', 'alphabetical')
+
+    return render(request, 'word_detail.html', {'word': word, 'order': order})
+
+#-----------------------------Info view ----------------------------------------------------
 
 def info(request):
     return render(request, 'info.html')

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Zoek het woord{% endblock %}</title>
@@ -10,30 +11,98 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
+
 <body class="bg-gray-50 text-gray-800 font-sans">
 
     <!-- Navbar -->
-<nav class="bg-gray-100 px-1 py-1 shadow-md flex items-center justify-between text-lg font-bold text-gray-700">
-    <div class="flex items-center">
-        <a class="flex-shrink-0" href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="Logo" class="h-16 w-16"></a>
+    <nav class="bg-gray-100 px-1 py-1 shadow-md flex items-center justify-between text-lg font-bold text-gray-700">
         <div class="flex items-center">
-            <a href="{% url 'home' %}" class="hover:underline">Home</a>
-            {% block breadcrumbs %}
+            <a class="flex-shrink-0" href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="Logo"
+                    class="h-16 w-16"></a>
+            <div class="flex items-center">
+                <a href="{% url 'home' %}" class="hover:underline">Home</a>
+                {% block breadcrumbs %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="flex items-center">
+            {% block nav_button %}
             {% endblock %}
         </div>
-    </div>
-    <div class="flex items-center">
-        {% block nav_button %}
-        {% endblock %}
-    </div>
-</nav>
+    </nav>
 
 
     <!-- Main content -->
     <main class="p-4">
-        {% block content %}
-        {% endblock %}
-    </main>
 
+        <!-- Global search input -->
+        <input type="text" id="globalSearchInput" placeholder="Zoek in alle kaarten..."
+            class="border rounded px-3 py-2 mb-4 w-full">
+
+        <!-- Original page content -->
+        <div id="originalContent">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- Search results container -->
+        <div id="searchResultsContainer"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 hidden"></div>
+    </main>
+    
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('globalSearchInput');
+    const resultsContainer = document.getElementById('searchResultsContainer');
+    const originalContent = document.getElementById('originalContent');
+
+    input.addEventListener('input', function () {
+        const query = this.value.trim();
+
+        if (query.length < 2) {
+            resultsContainer.classList.add('hidden');
+            originalContent.classList.remove('hidden');
+            resultsContainer.innerHTML = '';
+            return;
+        }
+
+        fetch(`/ajax/live-search-cards/?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                let html = '';
+
+                ['categories', 'subcategories', 'words'].forEach(group => {
+                    data[group].forEach(item => {
+                        html += `
+                            <a href="${item.url}" class="item-card flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
+                                ${item.image ? `
+                                    <div class="w-full h-48 bg-center bg-contain bg-no-repeat" style="background-image: url('${item.image}');"></div>
+                                ` : `
+                                    <img src="/static/images/default.jpg" alt="Default Image" class="w-full h-48 object-cover">
+                                `}
+                                <div class="text-center text-xl font-bold py-3">${item.name}</div>
+                            </a>
+                        `;
+                    });
+                });
+
+                if (!html) {
+                    html = '<p class="text-gray-500 col-span-full">Geen resultaten gevonden.</p>';
+                }
+
+                resultsContainer.innerHTML = html;
+                originalContent.classList.add('hidden');
+                resultsContainer.classList.remove('hidden');
+            })
+            .catch(err => {
+                console.error(err);
+                resultsContainer.innerHTML = '<p class="text-red-500 col-span-full">Fout bij ophalen van resultaten.</p>';
+                originalContent.classList.add('hidden');
+                resultsContainer.classList.remove('hidden');
+            });
+    });
+});
+</script>
 </body>
+
 </html>
