@@ -120,7 +120,7 @@ class WordAdmin(ImportExportModelAdmin):
     resource_class = WordResource
 
     readonly_fields = ('image_preview',)
-    fields = ('image_preview', 'image', 'image_search','name', 'subcategory', 'description')
+    fields = ('image_preview', 'image', 'image_search','name', 'category', 'subcategory', 'description')
 
     change_form_template = "admin/ftwapp/word/change_form.html"
 
