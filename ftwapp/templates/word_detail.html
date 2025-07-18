@@ -30,11 +30,21 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-bold mb-4 text-center">{{ word.name }}</h1>
+<h1 class="text-3xl font-bold mb-4 text-center">{{ word.name }} <button
+            onclick="handleSpeakClick(event, '{{ word.name|escapejs }}')"
+            class="bg-gray-50 bg-opacity-50 text-blue-600 p-2 shadow hover:bg-opacity-80"
+            aria-label="Luister naar uitspraak">
+            <i class="fas fa-volume-up"></i>
+        </button></h1>
 {% if word.image %}
 <img src="{{ word.image.url }}" alt="{{ word.name }}" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
 {% else %}
-<img src="{% static 'images/default.jpg' %}" alt="Default Image" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
+<img src="{% static 'images/default.jpg' %}" alt="Default" style="max-height: 66vh;" class="mb-4 rounded shadow mx-auto">
 {% endif %}
-<p class="text-lg leading-relaxed max-w-2xl mx-auto" style="font-family: Verdana, Arial, sans-serif;">{{word.description}}</p>
+<p class="text-lg leading-relaxed max-w-2xl mx-auto" style="font-family: Verdana, Arial, sans-serif;">{{word.description}}<button
+            onclick="handleSpeakClick(event, '{{ word.description|escapejs }}')"
+            class="bg-gray-50 bg-opacity-50 text-blue-600 p-2 shadow hover:bg-opacity-80"
+            aria-label="Luister naar uitspraak">
+            <i class="fas fa-volume-up"></i>
+        </button></p>
 {% endblock %}

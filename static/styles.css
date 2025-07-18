@@ -53,6 +53,22 @@ nav img {
   font-size: 20px;
 }
 
+.speaker-button {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #007bff;
+    padding: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.speaker-button:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
 /* ===============================
     Medium screens (≤768px)
 =============================== */

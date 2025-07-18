@@ -10,6 +10,7 @@
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -49,7 +50,8 @@
         <div id="searchResultsContainer"
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 hidden"></div>
     </main>
-    
+
+    <!--Global Search Script-->    
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('globalSearchInput');
@@ -102,6 +104,23 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+</script>
+
+    <!--Pronunciation Script--> 
+
+<script>
+function speakDutch(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'nl-NL';
+  utterance.rate = 0.8;
+  speechSynthesis.speak(utterance);
+}
+
+function handleSpeakClick(event, text) {
+  event.preventDefault();     // Prevent the default click behavior
+  event.stopPropagation();    // Stop it from bubbling to parent elements
+  speakDutch(text);
+}
 </script>
 </body>
 

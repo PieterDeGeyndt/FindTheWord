@@ -13,7 +13,12 @@
 
 {% block content %}
 <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">{{ category.name }}</h1>
+    <h1 class="text-3xl font-bold">{{ category.name }} <button
+            onclick="handleSpeakClick(event, '{{ category.name|escapejs }}')"
+            class="bg-gray-50 bg-opacity-50 text-blue-600 p-2 shadow hover:bg-opacity-80"
+            aria-label="Luister naar uitspraak">
+            <i class="fas fa-volume-up"></i>
+        </button></h1>
 
     <form method="get" class="flex items-center gap-2">
         <label for="order" class="text-lg">Sorteer:</label>
@@ -28,10 +33,21 @@
     <a href="{% url 'subcategory_detail' subcategory.pk %}"
         class="item-card flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
         {% if subcategory.image %}
-        <div class="w-full h-48 bg-center bg-contain bg-no-repeat"
-            style="background-image: url('{{ subcategory.image.url }}');"></div>
+        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
+            style="background-image: url('{{ subcategory.image.url }}');"><button
+                onclick="handleSpeakClick(event, '{{ subcategory.name|escapejs }}')"
+                class="speaker-button"
+                aria-label="Luister naar uitspraak">
+                <i class="fas fa-volume-up"></i>
+            </button></div>
         {% else %}
-        <img src="{% static 'images/default.jpg' %}" alt="">
+        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt=""><div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
+            style="background-image: url('{{ subcategory.image.url }}');"><button
+                onclick="handleSpeakClick(event, '{{ subcategory.name|escapejs }}')"
+                class="speaker-button"
+                aria-label="Luister naar uitspraak">
+                <i class="fas fa-volume-up"></i>
+            </button></div>
         {% endif %}
         <div class="text-center text-xl font-bold py-3">{{ subcategory.name }}</div>
     </a>
@@ -44,10 +60,21 @@
     <a href="{% url 'word_detail' word.pk %}"
         class="item-card flex flex-col bg-white rounded-xl shadow hover:scale-105 transition transform duration-200">
         {% if word.image %}
-        <div class="w-full h-48 bg-center bg-contain bg-no-repeat"
-            style="background-image: url('{{ word.image.url }}');"></div>
+        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
+            style="background-image: url('{{ word.image.url }}');"><button
+                onclick="handleSpeakClick(event, '{{ word.name|escapejs }}')"
+                class="speaker-button"
+                aria-label="Luister naar uitspraak">
+                <i class="fas fa-volume-up"></i>
+            </button></div>
         {% else %}
-        <img src="{% static 'images/default.jpg' %}" alt="">
+        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt=""><div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
+            style="background-image: url('{{ word.image.url }}');"><button
+                onclick="handleSpeakClick(event, '{{ word.name|escapejs }}')"
+                class="speaker-button"
+                aria-label="Luister naar uitspraak">
+                <i class="fas fa-volume-up"></i>
+            </button></div>
         {% endif %}
         <div class="text-center text-lg font-bold py-3">
             {{ word.name }}
