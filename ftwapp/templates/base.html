@@ -10,7 +10,9 @@
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="manifest" href="{% static 'manifest.json' %}">
 </head>
 
 <body class="bg-gray-50 text-gray-800 font-sans">
@@ -121,6 +123,14 @@ function handleSpeakClick(event, text) {
   event.stopPropagation();    // Stop it from bubbling to parent elements
   speakDutch(text);
 }
+</script>
+<!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("{% static 'js/service-worker.js' %}")
+      .then(reg => console.log("Service worker registered:", reg))
+      .catch(err => console.error("Service worker error:", err));
+  }
 </script>
 </body>
 
