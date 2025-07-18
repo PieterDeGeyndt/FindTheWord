@@ -1,6 +1,6 @@
 {
-  "name": "Find The Word",
-  "short_name": "FTW",
+  "name": "Zoek Het Woord",
+  "short_name": "ZHW",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
