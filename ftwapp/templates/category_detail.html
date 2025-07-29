@@ -41,7 +41,7 @@
                 <i class="fas fa-volume-up"></i>
             </button></div>
         {% else %}
-        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt=""><div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
+        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt="Default"><div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
             style="background-image: url('{{ subcategory.image.url }}');"><button
                 onclick="handleSpeakClick(event, '{{ subcategory.name|escapejs }}')"
                 class="speaker-button"
@@ -68,7 +68,7 @@
                 <i class="fas fa-volume-up"></i>
             </button></div>
         {% else %}
-        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt=""><div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
+        <div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt="Default"><div class="relative w-full h-48 bg-center bg-cover bg-no-repeat"
             style="background-image: url('{{ word.image.url }}');"><button
                 onclick="handleSpeakClick(event, '{{ word.name|escapejs }}')"
                 class="speaker-button"

@@ -8,6 +8,7 @@ from django.core.files import File
 from .models import Category, Subcategory, Word
 from django.conf import settings
 from django.utils import timezone
+from django.http import HttpResponse
 
 @staff_member_required
 def download_and_assign_image(request):
@@ -58,6 +59,7 @@ def image_search_view(request):
         return JsonResponse({'images': data.get('images_results', [])})
     else:
         return JsonResponse({'error': 'Failed to fetch images'}, status=500)
+
 #-----------------------------Global Search view ----------------------------------------------------
 
 from django.urls import reverse
@@ -218,3 +220,14 @@ def word_detail(request, pk):
 
 def info(request):
     return render(request, 'info.html')
+
+#-----------------------------Info view ----------------------------------------------------
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin/",
+        "",
+        "Sitemap: https://zoekhetwoord.be/sitemap.xml"
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")

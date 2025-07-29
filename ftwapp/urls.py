@@ -10,4 +10,5 @@ urlpatterns = [
     path('word/<int:pk>/', views.word_detail, name='word_detail'),
     path('info/', views.info, name='info'),
     path('ajax/live-search-cards/', views.live_search_cards, name='live_search_cards'),
+    path("robots.txt", views.robots_txt, name="robots_txt"),
 ]

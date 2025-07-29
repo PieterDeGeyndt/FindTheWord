@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% block meta_description %}
+Leer hoe je het woord "{{ word.name }}" correct uitspreekt in het Nederlands, met hulp voor mensen met PPA-SV.
+{% endblock %}
+{% block og_title %}{{ word.name }} - Uitspraak{% endblock %}
+{% block og_desc %}Hoor de Nederlandse uitspraak van het woord {{ word.name }}{% endblock %}
+{% block og_image %}{{ word.image.url }}{% endblock %}
 {% block nav_button %}
 {% if word.subcategory %}
 <a href="{% url 'subcategory_detail' word.subcategory.pk %}"

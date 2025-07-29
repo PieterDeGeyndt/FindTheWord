@@ -47,7 +47,7 @@
                 <i class="fas fa-volume-up"></i>
             </button></div>
         {% else %}
-        <div class="relative h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt=""><button
+        <div class="relative h-48 bg-center bg-cover bg-no-repeat"><img src="{% static 'images/default.jpg' %}" alt="Default"><button
                 onclick="handleSpeakClick(event, '{{ word.name|escapejs }}')"
                 class="speaker-button"
                 aria-label="Luister naar uitspraak">
