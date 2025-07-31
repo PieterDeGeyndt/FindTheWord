@@ -183,7 +183,19 @@ def subcategory_detail(request, subcategory_id):
             ]
             words = sorted(words, key=lambda w: months_order.index(w.name) if w.name in months_order else 999)
         else:
-            words = words.order_by('name')
+            if subcategory.name == "De Seizoenen":
+                seasons_order = [
+                    "Lente", "Zomer", "Herfst", "Winter"
+                ]
+                words = sorted(words, key=lambda w: seasons_order.index(w.name) if w.name in seasons_order else 999)
+            else:
+                if subcategory.name == "Dagen":
+                    days_order = [
+                        "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag"
+                    ]
+                    words = sorted(words, key=lambda w: days_order.index(w.name) if w.name in days_order else 999)
+                else:    
+                    words = words.order_by('name')    
 
     return render(request, 'subcategory_detail.html', {
         'subcategory': subcategory,
