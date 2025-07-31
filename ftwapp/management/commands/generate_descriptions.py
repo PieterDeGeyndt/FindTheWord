@@ -6,25 +6,27 @@ from openai import OpenAI
 from django.conf import settings
 from django.db.models import Q
 
+client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
-
-client = OpenAI(api_key= settings.OPENAI_API_KEY)
-language=settings.WEB_LANGUAGE
 class Command(BaseCommand):
-    help = "Generate descriptions for words using ChatGPT"
+    help = "Generate Dutch descriptions for new words using GPT"
 
     def handle(self, *args, **kwargs):
         words = Word.objects.filter(Q(description__isnull=True) | Q(description=""))
+
         for word in words:
-            prompt = f"Write a short, clear description for the word '{word.name}' in {language}, easy to understand for everyone."
+            prompt = f"Schrijf een korte, duidelijke beschrijving in het Nederlands voor het woord '{word.name}'. Gebruik eenvoudige taal."
+
             response = client.chat.completions.create(
                 model="gpt-4o",
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant that writes clear, short descriptions."},
+                    {"role": "system", "content": "Je bent een behulpzame assistent die korte en duidelijke beschrijvingen maakt in het Nederlands, eenvoudig te begrijpen voor iedereen."},
                     {"role": "user", "content": prompt}
                 ]
             )
+
             description = response.choices[0].message.content.strip()
             word.description = description
             word.save()
-            self.stdout.write(self.style.SUCCESS(f"Updated: {word.name}"))
+            self.stdout.write(self.style.SUCCESS(f"Beschrijving toegevoegd voor: {word.name}"))
+

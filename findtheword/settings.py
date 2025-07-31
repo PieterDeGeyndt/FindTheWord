@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'import_export',
+    'nested_admin',
     'ftwapp',  # Your app
 ]
 

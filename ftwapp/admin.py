@@ -1,3 +1,4 @@
+import nested_admin
 from django import forms
 from django.contrib import admin
 from import_export import resources
@@ -5,6 +6,38 @@ from import_export.admin import ImportExportModelAdmin
 from .models import Category, Subcategory, Word
 from django.urls import reverse
 from django.utils.html import format_html
+
+#-- Nested Admin for Categories and Subcategories --
+class WordInline(nested_admin.NestedTabularInline):
+    model = Word
+    extra = 0
+    fields = ('id_display', 'name', 'subcategory', 'category', 'description')
+    readonly_fields = ('id_display',)
+ 
+    def id_display(self, obj):
+        return obj.id
+    id_display.short_description = "ID"
+
+class SubcategoryInline(nested_admin.NestedStackedInline):
+    model = Subcategory
+    inlines = [WordInline]
+    extra = 0
+    fields = ('id_display', 'name', 'category', 'image')
+    readonly_fields = ('id_display',)
+
+    def id_display(self, obj):
+        return obj.id
+    id_display.short_description = "ID"
+
+class CategoryAdmin(nested_admin.NestedModelAdmin):
+    inlines = [SubcategoryInline]
+    list_display = ('id', 'name')
+    readonly_fields = ('id_display',)
+    fields = ('id_display', 'name', 'parent', 'image')
+
+    def id_display(self, obj):
+        return obj.id
+    id_display.short_description = "ID"
 
 # -------- Category --------
 class CategoryResource(resources.ModelResource):
@@ -29,9 +62,12 @@ class CategoryAdminForm(forms.ModelForm):
         self.fields['image_search'].widget.attrs.update({'id': 'id_image_search'})
 
 @admin.register(Category)
-class CategoryAdmin(ImportExportModelAdmin):
+class CategoryAdmin(nested_admin.NestedModelAdmin, ImportExportModelAdmin):
     form = CategoryAdminForm
     resource_class = CategoryResource
+
+    inlines = [SubcategoryInline]
+    list_display = ('id','name',)
 
     readonly_fields = ('image_preview',)
     fields = ('image_preview', 'name', 'parent', 'image', 'image_search')
@@ -47,6 +83,7 @@ class CategoryAdmin(ImportExportModelAdmin):
             'https://code.jquery.com/jquery-3.6.0.min.js',
             'ftwapp/image_search.js',
         )
+
 
 
 # -------- Subcategory --------
@@ -75,7 +112,8 @@ class SubcategoryAdminForm(forms.ModelForm):
 class SubcategoryAdmin(ImportExportModelAdmin):
     form = SubcategoryAdminForm
     resource_class = SubcategoryResource
-
+    list_display = ('id', 'name', 'category')
+    
     readonly_fields = ('image_preview',)
     fields = ('image_preview', 'name', 'category', 'image', 'image_search')
 
@@ -118,11 +156,24 @@ class WordAdminForm(forms.ModelForm):
 class WordAdmin(ImportExportModelAdmin):
     form = WordAdminForm
     resource_class = WordResource
-
+    list_display = ('id', 'name', 'category', 'subcategory', 'has_image', 'has_description')
+    list_filter = ('category', 'subcategory')
+    search_fields = ('name',)
+    
     readonly_fields = ('image_preview',)
     fields = ('image_preview', 'image', 'image_search','name', 'category', 'subcategory', 'description')
 
     change_form_template = "admin/ftwapp/word/change_form.html"
+
+    def has_image(self, obj):
+        return bool(obj.image)
+    has_image.boolean = True
+    has_image.short_description = "Image"
+
+    def has_description(self, obj):
+        return bool(obj.description)
+    has_description.boolean = True
+    has_description.short_description = "Description"
 
     def image_preview(self, obj):
         if obj.image:

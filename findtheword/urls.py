@@ -16,6 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('ftwapp.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('nested_admin/', include('nested_admin.urls')),  # required for JS/CSS
 ]
 
 if settings.DEBUG:
