@@ -176,7 +176,14 @@ def subcategory_detail(request, subcategory_id):
     if order == 'last_used':
         words = words.order_by('-last_used')
     else:
-        words = words.order_by('name')
+        if subcategory.name == "De Maanden":
+            months_order = [
+                "Januari", "Februari", "Maart", "April", "Mei", "Juni",
+                "Juli", "Augustus", "September", "Oktober", "November", "December"
+            ]
+            words = sorted(words, key=lambda w: months_order.index(w.name) if w.name in months_order else 999)
+        else:
+            words = words.order_by('name')
 
     return render(request, 'subcategory_detail.html', {
         'subcategory': subcategory,

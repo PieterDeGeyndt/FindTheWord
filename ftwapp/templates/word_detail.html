@@ -5,7 +5,13 @@ Leer hoe je het woord "{{ word.name }}" correct uitspreekt in het Nederlands, me
 {% endblock %}
 {% block og_title %}{{ word.name }} - Uitspraak{% endblock %}
 {% block og_desc %}Hoor de Nederlandse uitspraak van het woord {{ word.name }}{% endblock %}
-{% block og_image %}{{ word.image.url }}{% endblock %}
+{% block og_image %}
+  {% if word.image %}
+    {{ word.image.url }}
+  {% else %}
+    {% static "images/default.jpg" %}
+  {% endif %}
+{% endblock %}
 {% block nav_button %}
 {% if word.subcategory %}
 <a href="{% url 'subcategory_detail' word.subcategory.pk %}"
