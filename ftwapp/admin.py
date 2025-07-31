@@ -134,7 +134,7 @@ class SubcategoryAdmin(ImportExportModelAdmin):
 class WordResource(resources.ModelResource):
     class Meta:
         model = Word
-        fields = '__all__'
+        fields = ('id', 'name', 'image', 'category', 'subcategory', 'description')
 
 class WordAdminForm(forms.ModelForm):
     image_search = forms.CharField(
